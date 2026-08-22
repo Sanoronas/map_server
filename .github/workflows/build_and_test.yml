@@ -27,6 +27,11 @@ jobs:
         with:
           path: map_server
 
+      - name: install dependencies
+        run: |
+          apt update
+          apt install ros-$ROS_DISTRO-ament-cmake
+
       - name: Build with Colcon (Release Mode)
         run: |
           mkdir -p ~/ros2_ws
