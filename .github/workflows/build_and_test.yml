@@ -24,7 +24,8 @@ jobs:
           - ros_distro: kilted
             runs_on: ubuntu-24.04
           - ros_distro: lyrical
-            runs_on: ubuntu-24.04
+            runs_on: ubuntu-26.04
+      fail-fast: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
