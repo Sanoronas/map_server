@@ -1,0 +1,48 @@
+name: Colcon Build Test (Release Mode)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Colcon Build (Release)
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        include:
+          - container: ros:rolling
+          - container: ros:humble
+          - container: ros:iron
+          - container: ros:jazzy
+          - container: ros:kilted
+          - container: ros:lyrical
+      fail-fast: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: map_server
+      
+      - name: Install dependencies 
+        shell: bash
+        run: |
+          apt update
+          rm -f /etc/ros/rosdep/sources.list.d/20-default.list
+          rosdep init
+          rosdep update --include-eol-distros
+          mkdir -p ~/ros2_ws
+          ln -s $GITHUB_WORKSPACE ~/ros2_ws/src
+          cd ~/ros2_ws
+          source /opt/ros/$ROS_DISTRO/setup.bash
+          rosdep install --from-paths src --ignore-src -r -y
+
+      - name: Build with Colcon (Release Mode)
+        shell: bash
+        run: |
+          cd ~/ros2_ws
+          source /opt/ros/$ROS_DISTRO/setup.bash
+          colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select map_server

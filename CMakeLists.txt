@@ -9,8 +9,17 @@ find_package(yaml-cpp REQUIRED)
 include_directories(include)
 
 add_executable(map_server src/map_server.cpp)
-ament_target_dependencies(map_server rclcpp nav_msgs)
-target_link_libraries(map_server yaml-cpp)
+
+target_include_directories(map_server PRIVATE
+  ${rclcpp_INCLUDE_DIRS}
+  ${nav_msgs_INCLUDE_DIRS}
+)
+
+target_link_libraries(map_server PRIVATE
+  ${rclcpp_LIBRARIES}
+  ${nav_msgs_LIBRARIES}
+  yaml-cpp
+)
 
 install(TARGETS
   map_server
