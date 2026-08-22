@@ -27,11 +27,6 @@ jobs:
         with:
           path: map_server
 
-      - name: install dependencies
-        run: |
-          apt update
-          apt install ros-$ROS_DISTRO-ament-cmake
-
       - name: Build with Colcon (Release Mode)
         shell: bash
         run: |
