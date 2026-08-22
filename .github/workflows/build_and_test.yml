@@ -31,6 +31,7 @@ jobs:
         shell: bash
         run: |
           apt update
+          rm -f /etc/ros/rosdep/sources.list.d/20-default.list
           rosdep init
           rosdep update --include-eol-distros
           mkdir -p ~/ros2_ws
