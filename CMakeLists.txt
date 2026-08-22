@@ -9,7 +9,7 @@ find_package(yaml-cpp REQUIRED)
 include_directories(include)
 
 add_executable(map_server src/map_server.cpp)
-target_link_libraries(talker PUBLIC rclcpp::rclcpp nav_msgs::nav_msgs yaml-cpp)
+target_link_libraries(map_server PUBLIC rclcpp::rclcpp nav_msgs::nav_msgs yaml-cpp)
 
 install(TARGETS
   map_server
