@@ -35,17 +35,9 @@ jobs:
         with:
           required-ros-distributions: ${{ matrix.ros_distro }}
 
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y python3-colcon-common-extensions
-          sudo ros-${{ matrix.ros_distro }}-colcon-mixin
-
       - name: Build with Colcon (Release Mode)
         run: |
           mkdir -p ~/ros2_ws/src
           ln -s $GITHUB_WORKSPACE ~/ros2_ws/src/map_server
           cd ~/ros2_ws
-          colcon mixin add default https://raw.githubusercontent.com/colcon/colcon-mixin-repository/master/index.yaml
-          colcon mixin update default
-          colcon build --mixin release --packages-select map_server
+          colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug --packages-select map_server
