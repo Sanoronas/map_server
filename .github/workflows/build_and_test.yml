@@ -33,6 +33,7 @@ jobs:
           apt install ros-$ROS_DISTRO-ament-cmake
 
       - name: Build with Colcon (Release Mode)
+        shell: bash
         run: |
           mkdir -p ~/ros2_ws
           ln -s $GITHUB_WORKSPACE ~/ros2_ws/src
