@@ -9,31 +9,21 @@ on:
 jobs:
   build:
     name: Colcon Build (Release)
-    runs-on: ${{ matrix.runs_on }}
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
     strategy:
       matrix:
         include:
-          - ros_distro: rolling
-            runs_on: ubuntu-26.04
-          - ros_distro: humble
-            runs_on: ubuntu-22.04
-          - ros_distro: iron
-            runs_on: ubuntu-22.04
-          - ros_distro: jazzy
-            runs_on: ubuntu-24.04
-          - ros_distro: kilted
-            runs_on: ubuntu-24.04
-          - ros_distro: lyrical
-            runs_on: ubuntu-26.04
+          - container: ros:rolling
+          - container: ros:humble
+          - container: ros:iron
+          - container: ros:jazzy
+          - container: ros:kilted
+          - container: ros:lyrical
       fail-fast: false
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Setup ROS 2
-        uses: ros-tooling/setup-ros@v0.7
-        with:
-          required-ros-distributions: ${{ matrix.ros_distro }}
 
       - name: Build with Colcon (Release Mode)
         run: |
