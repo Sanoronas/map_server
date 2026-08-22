@@ -24,10 +24,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          path: map_server
 
       - name: Build with Colcon (Release Mode)
         run: |
-          mkdir -p ~/ros2_ws/src
-          ln -s $GITHUB_WORKSPACE ~/ros2_ws/src/map_server
+          mkdir -p ~/ros2_ws
+          ln -s $GITHUB_WORKSPACE ~/ros2_ws/src
           cd ~/ros2_ws
-          colcon build --cmake-args -DCMAKE_BUILD_TYPE=Debug --packages-select map_server
+          colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select map_server
